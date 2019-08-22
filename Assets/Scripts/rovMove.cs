@@ -11,7 +11,7 @@ public class rovMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 5f;
+        speed = 1f;
         turnSpeed = 5f;
     }
 
