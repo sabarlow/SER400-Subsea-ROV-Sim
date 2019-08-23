@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class rovMove : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class rovMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InputTracking.disablePositionalTracking = true;
+        InputTracking.Recenter();
         if (Input.GetKey(KeyCode.W))
         {
             character.transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
