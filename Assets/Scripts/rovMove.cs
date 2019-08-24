@@ -8,43 +8,32 @@ public class rovMove : MonoBehaviour
     public float speed;
     public float turnSpeed;
 
+    private Rigidbody rovBody;
+
     // Start is called before the first frame update
     void Start()
     {
-        speed = 1f;
-        turnSpeed = 5f;
+        rovBody = GetComponent<Rigidbody>();
+
+        speed = 50f;
+        turnSpeed = 1f;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            character.transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
-            //Vector3 newPosition = 
-            //newPosition.z++;
-            //character.transform.position = newPosition;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            character.transform.Translate(Vector3.back * Time.deltaTime * speed, Space.Self);
-            //Vector3 newPosition = character.transform.position;
-            //newPosition.z--;
-            //character.transform.position = newPosition;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            character.transform.Rotate(Vector3.down * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            character.transform.Rotate(-Vector3.down * Time.deltaTime * speed);
-        }
 
-        float mousePitch = Input.GetAxis("Mouse Y");
-        character.transform.Rotate(Vector3.right * mousePitch);
+        float thrustForward = Input.GetAxis("ThrustForward");
+        float thrustRight = Input.GetAxis("ThrustRight");
+        float thrustUp = Input.GetAxis("ThrustUp");
 
-        float mouseYaw = Input.GetAxis("Mouse X");
-        character.transform.Rotate(Vector3.up * mouseYaw);
+        Vector3 movement = new Vector3(thrustRight, thrustUp, thrustForward);
+        rovBody.AddRelativeForce(movement * speed);
+
+        float yaw = Input.GetAxis("Yaw");
+        float pitch = Input.GetAxis("Pitch");
+        Vector3 rotateMovement = new Vector3(pitch, yaw, 0);
+        rovBody.AddRelativeTorque(rotateMovement * turnSpeed);
+
     }
 }
